@@ -66,40 +66,59 @@ export default function Page() {
       <div className="mx-auto max-w-3xl px-4 py-10">
         <header className="text-center mb-6">
           <h1 className="text-4xl font-bold">Dis or Dat</h1>
-          <p className="mt-2 text-sm opacity-80">enter a name, object, food, etc.</p>
+          <p className="mt-3 text-lg font-medium text-indigo-600 dark:text-indigo-400">
+            Let the Magic Genie Decide What&apos;s Better! ✨
+          </p>
+          <p className="mt-2 text-sm opacity-80">
+            Enter any two things and watch the genie work its magic
+          </p>
         </header>
 
         <Genie verdict={verdict} />
 
         <div className="grid gap-4 md:grid-cols-2">
-          <div className={clsx(
-            "rounded-2xl border p-4 transition-colors duration-200",
-            verdict === "dis" && "border-green-500 bg-green-50 dark:bg-green-900/20",
-            verdict === "dat" && "border-gray-200 dark:border-gray-700"
-          )}>
-            <label className="block text-sm font-medium mb-2" htmlFor="dis">Dis</label>
+          <div
+            className={clsx(
+              "rounded-2xl border p-4 transition-colors duration-200",
+              verdict === "dis" &&
+                "border-green-500 bg-green-50 dark:bg-green-900/20",
+              verdict === "dat" && "border-gray-200 dark:border-gray-700"
+            )}
+          >
+            <label className="block text-sm font-medium mb-2" htmlFor="dis">
+              Dis
+            </label>
             <input
               id="dis"
               className="w-full rounded-xl border px-3 py-2 outline-none focus:ring-2 focus:ring-indigo-500 bg-white dark:bg-gray-800 text-gray-900 dark:text-gray-100 placeholder-gray-500 dark:placeholder-gray-400"
               placeholder="enter a name, object, food, etc."
               value={dis}
               onChange={(e) => setDis(e.target.value)}
-              onKeyDown={(e) => { if (e.key === "Enter") decide(); }}
+              onKeyDown={(e) => {
+                if (e.key === "Enter") decide();
+              }}
             />
           </div>
-          <div className={clsx(
-            "rounded-2xl border p-4 transition-colors duration-200",
-            verdict === "dat" && "border-blue-500 bg-blue-50 dark:bg-blue-900/20",
-            verdict === "dis" && "border-gray-200 dark:border-gray-700"
-          )}>
-            <label className="block text-sm font-medium mb-2" htmlFor="dat">Dat</label>
+          <div
+            className={clsx(
+              "rounded-2xl border p-4 transition-colors duration-200",
+              verdict === "dat" &&
+                "border-blue-500 bg-blue-50 dark:bg-blue-900/20",
+              verdict === "dis" && "border-gray-200 dark:border-gray-700"
+            )}
+          >
+            <label className="block text-sm font-medium mb-2" htmlFor="dat">
+              Dat
+            </label>
             <input
               id="dat"
               className="w-full rounded-xl border px-3 py-2 outline-none focus:ring-2 focus:ring-indigo-500 bg-white dark:bg-gray-800 text-gray-900 dark:text-gray-100 placeholder-gray-500 dark:placeholder-gray-400"
               placeholder="enter a name, object, food, etc."
               value={dat}
               onChange={(e) => setDat(e.target.value)}
-              onKeyDown={(e) => { if (e.key === "Enter") decide(); }}
+              onKeyDown={(e) => {
+                if (e.key === "Enter") decide();
+              }}
             />
           </div>
         </div>
@@ -112,18 +131,32 @@ export default function Page() {
           >
             {loading ? "Thinking…" : "Decide"}
           </button>
-          <button onClick={swap} className="rounded-xl border px-5 py-2.5 hover:bg-gray-50 dark:hover:bg-gray-800 transition-colors">Swap</button>
-          <button onClick={resetAll} className="rounded-xl border px-5 py-2.5 hover:bg-gray-50 dark:hover:bg-gray-800 transition-colors">Reset</button>
+          <button
+            onClick={swap}
+            className="rounded-xl border px-5 py-2.5 hover:bg-gray-50 dark:hover:bg-gray-800 transition-colors"
+          >
+            Swap
+          </button>
+          <button
+            onClick={resetAll}
+            className="rounded-xl border px-5 py-2.5 hover:bg-gray-50 dark:hover:bg-gray-800 transition-colors"
+          >
+            Reset
+          </button>
         </div>
 
         {verdict && (
           <div className="mt-6 text-center">
-            <span className={clsx(
-              "inline-flex items-center rounded-full px-3 py-1 text-sm font-semibold",
-              verdict === "dis" ? "bg-green-100 text-green-800 dark:bg-green-900/40 dark:text-green-200" :
-              verdict === "dat" ? "bg-blue-100 text-blue-800 dark:bg-blue-900/40 dark:text-blue-200" :
-              "bg-yellow-100 text-yellow-800 dark:bg-yellow-900/40 dark:text-yellow-200"
-            )}>
+            <span
+              className={clsx(
+                "inline-flex items-center rounded-full px-3 py-1 text-sm font-semibold",
+                verdict === "dis"
+                  ? "bg-green-100 text-green-800 dark:bg-green-900/40 dark:text-green-200"
+                  : verdict === "dat"
+                  ? "bg-blue-100 text-blue-800 dark:bg-blue-900/40 dark:text-blue-200"
+                  : "bg-yellow-100 text-yellow-800 dark:bg-yellow-900/40 dark:text-yellow-200"
+              )}
+            >
               {verdict.toUpperCase()}
             </span>
             {reason && <p className="mt-2 text-sm opacity-80">{reason}</p>}

@@ -1,0 +1,99 @@
+<svg viewBox="0 0 320 320" xmlns="http://www.w3.org/2000/svg">
+  <!-- Genie body (more humanoid) -->
+  <ellipse cx="160" cy="220" rx="50" ry="70" fill="#8B5CF6" opacity="0.9"/>
+  
+  <!-- Genie head (slightly tilted) -->
+  <ellipse cx="160" cy="130" rx="45" ry="40" fill="#A78BFA" transform="rotate(10 160 130)"/>
+  
+  <!-- Genie turban (more elaborate, tilted) -->
+  <ellipse cx="160" cy="95" rx="50" ry="30" fill="#7C3AED" transform="rotate(10 160 95)"/>
+  <ellipse cx="160" cy="88" rx="40" ry="25" fill="#6D28D9" transform="rotate(10 160 88)"/>
+  <ellipse cx="160" cy="82" rx="30" ry="20" fill="#5B21B6" transform="rotate(10 160 82)"/>
+  
+  <!-- Turban jewel -->
+  <circle cx="160" cy="85" r="8" fill="#FBBF24"/>
+  <circle cx="160" cy="85" r="4" fill="#F59E0B"/>
+  
+  <!-- Genie eyes (confused/raised eyebrows) -->
+  <ellipse cx="145" cy="125" rx="8" ry="6" fill="#1F2937" transform="rotate(10 145 125)"/>
+  <ellipse cx="175" cy="125" rx="8" ry="6" fill="#1F2937" transform="rotate(10 175 125)"/>
+  <circle cx="147" cy="123" r="3" fill="#FBBF24" transform="rotate(10 147 123)"/>
+  <circle cx="177" cy="123" r="3" fill="#FBBF24" transform="rotate(10 177 123)"/>
+  <circle cx="148" cy="122" r="1.5" fill="#FFFFFF" transform="rotate(10 148 122)"/>
+  <circle cx="178" cy="122" r="1.5" fill="#FFFFFF" transform="rotate(10 178 122)"/>
+  
+  <!-- Raised eyebrows -->
+  <path d="M 135 115 Q 145 110 155 115" stroke="#1F2937" stroke-width="2" fill="none" transform="rotate(10 145 112)"/>
+  <path d="M 165 115 Q 175 110 185 115" stroke="#1F2937" stroke-width="2" fill="none" transform="rotate(10 175 112)"/>
+  
+  <!-- Genie nose -->
+  <ellipse cx="160" cy="135" rx="4" ry="6" fill="#F59E0B" transform="rotate(10 160 135)"/>
+  
+  <!-- Genie mustache -->
+  <path d="M 140 140 Q 160 145 180 140" stroke="#1F2937" stroke-width="3" fill="none" transform="rotate(10 160 140)"/>
+  
+  <!-- Genie mouth (confused/puzzled) -->
+  <path d="M 150 150 Q 160 145 170 150" stroke="#1F2937" stroke-width="2" fill="none" transform="rotate(10 160 150)"/>
+  
+  <!-- Genie left arm up (shrugging) - upper arm -->
+  <ellipse cx="90" cy="160" rx="12" ry="20" fill="#A78BFA" transform="rotate(-60 90 160)"/>
+  
+  <!-- Genie left forearm -->
+  <ellipse cx="70" cy="120" rx="10" ry="18" fill="#A78BFA" transform="rotate(-90 70 120)"/>
+  
+  <!-- Genie left hand (palm up) -->
+  <ellipse cx="70" cy="90" rx="8" ry="12" fill="#A78BFA" transform="rotate(-90 70 90)"/>
+  
+  <!-- Left hand fingers (spread out) -->
+  <ellipse cx="70" cy="75" rx="2" ry="6" fill="#A78BFA" transform="rotate(-90 70 75)"/>
+  <ellipse cx="65" cy="78" rx="2" ry="6" fill="#A78BFA" transform="rotate(-80 65 78)"/>
+  <ellipse cx="75" cy="78" rx="2" ry="6" fill="#A78BFA" transform="rotate(-100 75 78)"/>
+  <ellipse cx="63" cy="82" rx="2" ry="6" fill="#A78BFA" transform="rotate(-70 63 82)"/>
+  <ellipse cx="77" cy="82" rx="2" ry="6" fill="#A78BFA" transform="rotate(-110 77 82)"/>
+  
+  <!-- Genie right arm up (shrugging) - upper arm -->
+  <ellipse cx="230" cy="160" rx="12" ry="20" fill="#A78BFA" transform="rotate(60 230 160)"/>
+  
+  <!-- Genie right forearm -->
+  <ellipse cx="250" cy="120" rx="10" ry="18" fill="#A78BFA" transform="rotate(90 250 120)"/>
+  
+  <!-- Genie right hand (palm up) -->
+  <ellipse cx="250" cy="90" rx="8" ry="12" fill="#A78BFA" transform="rotate(90 250 90)"/>
+  
+  <!-- Right hand fingers (spread out) -->
+  <ellipse cx="250" cy="75" rx="2" ry="6" fill="#A78BFA" transform="rotate(90 250 75)"/>
+  <ellipse cx="245" cy="78" rx="2" ry="6" fill="#A78BFA" transform="rotate(80 245 78)"/>
+  <ellipse cx="255" cy="78" rx="2" ry="6" fill="#A78BFA" transform="rotate(100 255 78)"/>
+  <ellipse cx="243" cy="82" rx="2" ry="6" fill="#A78BFA" transform="rotate(70 243 82)"/>
+  <ellipse cx="257" cy="82" rx="2" ry="6" fill="#A78BFA" transform="rotate(110 257 82)"/>
+  
+  <!-- Genie vest/chest -->
+  <ellipse cx="160" cy="200" rx="35" ry="45" fill="#7C3AED" opacity="0.7"/>
+  
+  <!-- Genie belt -->
+  <rect x="125" y="210" width="70" height="8" rx="4" fill="#5B21B6"/>
+  <circle cx="160" cy="214" r="6" fill="#FBBF24"/>
+  
+  <!-- Question marks above hands -->
+  <text x="65" y="60" font-family="Arial, sans-serif" font-size="20" fill="#6B7280" font-weight="bold" transform="rotate(10 65 60)">?</text>
+  <text x="255" y="60" font-family="Arial, sans-serif" font-size="20" fill="#6B7280" font-weight="bold" transform="rotate(10 255 60)">?</text>
+  
+  <!-- Magic sparkles (confused) -->
+  <circle cx="80" cy="80" r="2" fill="#F59E0B" opacity="0.6">
+    <animate attributeName="opacity" values="0.6;0.1;0.6" dur="1.5s" repeatCount="indefinite"/>
+  </circle>
+  <circle cx="240" cy="80" r="2" fill="#F59E0B" opacity="0.6">
+    <animate attributeName="opacity" values="0.6;0.1;0.6" dur="1.5s" repeatCount="indefinite"/>
+  </circle>
+  <circle cx="160" cy="50" r="2.5" fill="#EF4444" opacity="0.7">
+    <animate attributeName="opacity" values="0.7;0.1;0.7" dur="2.5s" repeatCount="indefinite"/>
+  </circle>
+  
+  <!-- Magic smoke wisps (confused) -->
+  <path d="M 160 40 Q 170 30 180 40 Q 190 50 180 60" stroke="#A78BFA" stroke-width="2" fill="none" opacity="0.6">
+    <animate attributeName="opacity" values="0.6;0.2;0.6" dur="3s" repeatCount="indefinite"/>
+  </path>
+  <path d="M 140 50 Q 130 40 120 50 Q 110 60 120 70" stroke="#A78BFA" stroke-width="2" fill="none" opacity="0.6">
+    <animate attributeName="opacity" values="0.6;0.2;0.6" dur="2.5s" repeatCount="indefinite"/>
+  </path>
+</svg>

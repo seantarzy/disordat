@@ -1,8 +1,9 @@
 "use client";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import Genie from "@/components/Genie";
 import History from "@/components/History";
-import { saveToHistory } from "@/lib/history";
+import { saveToHistory, getHistory } from "@/lib/history";
+import { trackDecision, trackGenieInteraction } from "@/lib/analytics";
 import clsx from "clsx";
 
 type Verdict = "dis" | "dat" | "shrug";
@@ -13,35 +14,77 @@ export default function Page() {
   const [loading, setLoading] = useState(false);
   const [verdict, setVerdict] = useState<Verdict | null>(null);
   const [reason, setReason] = useState<string>("");
+  const [history, setHistory] = useState<
+    Array<{
+      dis: string;
+      dat: string;
+      verdict: "dis" | "dat" | "shrug";
+      reasoning: string;
+    }>
+  >([]);
   const disabled = loading || (!dis && !dat);
+
+  // Load history on component mount
+  useEffect(() => {
+    const loadHistory = () => {
+      const historyData = getHistory();
+      const historyArray = historyData.values().map((item) => ({
+        dis: item.dis,
+        dat: item.dat,
+        verdict: item.verdict,
+        reasoning: item.reasoning
+      }));
+      setHistory(historyArray);
+    };
+
+    loadHistory();
+
+    // Listen for history updates
+    const handleHistoryUpdate = () => loadHistory();
+    window.addEventListener("history-updated", handleHistoryUpdate);
+
+    return () => {
+      window.removeEventListener("history-updated", handleHistoryUpdate);
+    };
+  }, []);
 
   async function decide() {
     if (!dis && !dat) return;
     setLoading(true);
     setVerdict(null);
     setReason("");
+
+    // Track the decision attempt
+    trackGenieInteraction("decision_requested");
+
     try {
       const res = await fetch("/api/judge", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ dis, dat })
+        body: JSON.stringify({ dis, dat, history })
       });
       const data = await res.json();
       setVerdict(data.verdict);
       setReason(data.reasoning ?? "");
-      
+
+      // Track the decision result
+      trackDecision(dis, dat, data.verdict);
+
       // Save to history (only on client side)
       if (typeof window !== "undefined") {
         saveToHistory({
           dis,
           dat,
           verdict: data.verdict,
-          reasoning: data.reasoning ?? "",
+          reasoning: data.reasoning ?? ""
         });
       }
     } catch {
       setVerdict("dis");
       setReason("Offline fallback.");
+
+      // Track offline fallback
+      trackGenieInteraction("offline_fallback");
     } finally {
       setLoading(false);
     }
@@ -52,17 +95,23 @@ export default function Page() {
     setReason("");
     setDis(dat);
     setDat(dis);
+
+    // Track swap interaction
+    trackGenieInteraction("inputs_swapped");
   }
-  
+
   function resetAll() {
     setDis("");
     setDat("");
     setVerdict(null);
     setReason("");
+
+    // Track reset interaction
+    trackGenieInteraction("inputs_reset");
   }
 
   return (
-    <main className="min-h-dvh bg-white text-gray-900 dark:bg-zinc-950 dark:text-zinc-100">
+    <main className="min-h-dvh bg-black text-white">
       <div className="mx-auto max-w-3xl px-4 py-10">
         <header className="text-center mb-6">
           <h1 className="text-4xl font-bold">Dis or Dat</h1>
@@ -79,10 +128,10 @@ export default function Page() {
         <div className="grid gap-4 md:grid-cols-2">
           <div
             className={clsx(
-              "rounded-2xl border p-4 transition-colors duration-200",
+              "rounded-2xl border border-gray-700 p-4 transition-colors duration-200",
               verdict === "dis" &&
-                "border-green-500 bg-green-50 dark:bg-green-900/20",
-              verdict === "dat" && "border-gray-200 dark:border-gray-700"
+                "border-green-400 bg-green-900/30 shadow-lg shadow-green-500/20",
+              verdict === "dat" && "border-gray-700"
             )}
           >
             <label className="block text-sm font-medium mb-2" htmlFor="dis">
@@ -90,7 +139,7 @@ export default function Page() {
             </label>
             <input
               id="dis"
-              className="w-full rounded-xl border px-3 py-2 outline-none focus:ring-2 focus:ring-indigo-500 bg-white dark:bg-gray-800 text-gray-900 dark:text-gray-100 placeholder-gray-500 dark:placeholder-gray-400"
+              className="w-full rounded-xl border border-gray-700 px-3 py-2 outline-none focus:ring-2 focus:ring-indigo-500 bg-gray-900 text-white placeholder-gray-400"
               placeholder="enter a name, object, food, etc."
               value={dis}
               onChange={(e) => setDis(e.target.value)}
@@ -101,10 +150,10 @@ export default function Page() {
           </div>
           <div
             className={clsx(
-              "rounded-2xl border p-4 transition-colors duration-200",
+              "rounded-2xl border border-gray-700 p-4 transition-colors duration-200",
               verdict === "dat" &&
-                "border-blue-500 bg-blue-50 dark:bg-blue-900/20",
-              verdict === "dis" && "border-gray-200 dark:border-gray-700"
+                "border-green-400 bg-green-900/30 shadow-lg shadow-green-500/20",
+              verdict === "dis" && "border-gray-700"
             )}
           >
             <label className="block text-sm font-medium mb-2" htmlFor="dat">
@@ -112,7 +161,7 @@ export default function Page() {
             </label>
             <input
               id="dat"
-              className="w-full rounded-xl border px-3 py-2 outline-none focus:ring-2 focus:ring-indigo-500 bg-white dark:bg-gray-800 text-gray-900 dark:text-gray-100 placeholder-gray-500 dark:placeholder-gray-400"
+              className="w-full rounded-xl border border-gray-700 px-3 py-2 outline-none focus:ring-2 focus:ring-indigo-500 bg-gray-900 text-white placeholder-gray-400"
               placeholder="enter a name, object, food, etc."
               value={dat}
               onChange={(e) => setDat(e.target.value)}
@@ -133,13 +182,13 @@ export default function Page() {
           </button>
           <button
             onClick={swap}
-            className="rounded-xl border px-5 py-2.5 hover:bg-gray-50 dark:hover:bg-gray-800 transition-colors"
+            className="rounded-xl border border-gray-700 px-5 py-2.5 hover:bg-gray-800 transition-colors text-white"
           >
             Swap
           </button>
           <button
             onClick={resetAll}
-            className="rounded-xl border px-5 py-2.5 hover:bg-gray-50 dark:hover:bg-gray-800 transition-colors"
+            className="rounded-xl border border-gray-700 px-5 py-2.5 hover:bg-gray-800 transition-colors text-white"
           >
             Reset
           </button>

@@ -9,3 +9,13 @@ export function fnv1a32(str: string): number {
   return h >>> 0;
 }
 
+export function createComparisonHash(dis: string, dat: string): string {
+  // Normalize and sort inputs to ensure consistent hash regardless of order
+  const normalizedDis = dis.toLowerCase().trim();
+  const normalizedDat = dat.toLowerCase().trim();
+
+  // Sort alphabetically to ensure same hash regardless of input order
+  const sorted = [normalizedDis, normalizedDat].sort();
+  return `${sorted[0]}|${sorted[1]}`;
+}
+

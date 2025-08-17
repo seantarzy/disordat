@@ -1,0 +1,41 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 320" role="img" aria-label="Confident genie, hands on hips">
+    <defs>
+      <linearGradient id="body" x1="0" y1="0" x2="1" y2="1">
+        <stop offset="0" stop-color="#5b7cfa"/>
+        <stop offset="1" stop-color="#6d28d9"/>
+      </linearGradient>
+      <linearGradient id="gold" x1="0" y1="0" x2="0" y2="1">
+        <stop offset="0" stop-color="#fcd34d"/><stop offset="1" stop-color="#f59e0b"/>
+      </linearGradient>
+    </defs>
+  
+    <!-- smoke tail -->
+    <path d="M160 270c-22 18-42 12-60 25 22 5 45 5 60 5s38 0 60-5c-18-13-38-7-60-25z" fill="url(#body)" opacity=".35"/>
+    <!-- torso -->
+    <ellipse cx="160" cy="185" rx="76" ry="82" fill="url(#body)"/>
+    <!-- chest/abs highlights -->
+    <path d="M110 190c18-26 82-26 100 0" fill="none" stroke="#90a8ff" stroke-opacity=".35" stroke-width="6" stroke-linecap="round"/>
+    <path d="M140 210c10 8 30 8 40 0" fill="none" stroke="#90a8ff" stroke-opacity=".35" stroke-width="5" stroke-linecap="round"/>
+  
+    <!-- arms on hips -->
+    <path d="M90 180c-14 22 6 36 22 28 10-5 16-13 24-24l-10-12c-12 2-24 3-36 8z" fill="#3f5deb"/>
+    <path d="M230 180c14 22-6 36-22 28-10-5-16-13-24-24l10-12c12 2 24 3 36 8z" fill="#3f5deb"/>
+    <!-- bracelets -->
+    <rect x="96" y="196" rx="6" ry="6" width="30" height="14" fill="url(#gold)"/>
+    <rect x="194" y="196" rx="6" ry="6" width="30" height="14" fill="url(#gold)"/>
+  
+    <!-- head -->
+    <circle cx="160" cy="95" r="42" fill="url(#body)"/>
+    <!-- turban -->
+    <ellipse cx="160" cy="78" rx="48" ry="24" fill="#2d2a86"/>
+    <path d="M112 78h96c-8 14-30 24-48 24s-40-10-48-24z" fill="#413ea6"/>
+    <!-- diamond -->
+    <polygon points="160,58 172,70 160,82 148,70" fill="#a7f3f0" stroke="#ffd166" stroke-width="3"/>
+    <!-- hair tuft -->
+    <path d="M160 48c10 2 18 8 22 16-10-4-18-4-22-16z" fill="#0f172a"/>
+    <!-- face -->
+    <circle cx="148" cy="95" r="5" fill="#fff"/><circle cx="172" cy="95" r="5" fill="#fff"/>
+    <path d="M145 110q15 12 30 0" stroke="#fff" stroke-width="4" fill="none" stroke-linecap="round"/>
+  
+  </svg>
+  

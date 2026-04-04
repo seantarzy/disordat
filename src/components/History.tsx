@@ -1,6 +1,7 @@
 "use client";
 import { useState, useEffect } from "react";
 import { ComparisonHistory, getHistory, removeFromHistory, clearHistory } from "@/lib/history";
+import { trackToolUse } from "@/lib/analytics";
 import clsx from "clsx";
 
 export default function History() {
@@ -36,11 +37,13 @@ export default function History() {
   }
 
   const handleRemove = (id: string) => {
+    trackToolUse('history', 'remove', id);
     removeFromHistory(id);
     setHistory(getHistory().values());
   };
 
   const handleClearAll = () => {
+    trackToolUse('history', 'clear_all');
     clearHistory();
     setHistory([]);
   };

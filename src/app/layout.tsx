@@ -2,6 +2,7 @@ import type { Metadata } from 'next'
 import { Inter } from 'next/font/google'
 import './globals.css'
 import GoogleAnalytics from "@/components/GoogleAnalytics";
+import DataDiveFeedback from "@/components/DataDiveFeedback";
 
 const inter = Inter({ subsets: ['latin'] })
 
@@ -103,6 +104,7 @@ export default function RootLayout({
       <body className={inter.className}>
         <GoogleAnalytics />
         {children}
+        <DataDiveFeedback siteSlug="disordat" accentColor="#10b981" />
       </body>
     </html>
   );

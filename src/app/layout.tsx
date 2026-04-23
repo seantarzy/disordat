@@ -7,14 +7,14 @@ import DataDiveFeedback from "@/components/DataDiveFeedback";
 const inter = Inter({ subsets: ['latin'] })
 
 export const metadata: Metadata = {
-  title: "Dis or Dat - Let the Magic Genie Decide!",
+  title: "disordat — compare anything, share the verdict",
   description:
-    "A fun decision app where a magical genie compares two things and picks the winner. Enter any two items and let the genie decide what's better!",
+    "Enter two things. Get an honest side-by-side comparison with a winner. Every comparison gets its own shareable page — paste the link anywhere.",
   keywords:
-    "decision app, genie, comparison, choose, pick, fun, magic, dis or dat",
-  authors: [{ name: "Dis or Dat Team" }],
-  creator: "Dis or Dat",
-  publisher: "Dis or Dat",
+    "compare, comparison, versus, vs, decision, side by side, which is better, product comparison",
+  authors: [{ name: "disordat" }],
+  creator: "disordat",
+  publisher: "disordat",
   formatDetection: {
     email: false,
     address: false,
@@ -25,28 +25,19 @@ export const metadata: Metadata = {
     canonical: "/"
   },
   openGraph: {
-    title: "Dis or Dat - Let the Magic Genie Decide!",
+    title: "disordat — compare anything, share the verdict",
     description:
-      "A fun decision app where a magical genie compares two things and picks the winner.",
+      "Enter two things. Get an honest side-by-side comparison with a winner. Share the link anywhere.",
     url: "https://disordat.com",
-    siteName: "Dis or Dat",
-    images: [
-      {
-        url: "/genie-shrug.svg",
-        width: 320,
-        height: 320,
-        alt: "Magic Genie"
-      }
-    ],
+    siteName: "disordat",
     locale: "en_US",
     type: "website"
   },
   twitter: {
     card: "summary_large_image",
-    title: "Dis or Dat - Let the Magic Genie Decide!",
+    title: "disordat — compare anything, share the verdict",
     description:
-      "A fun decision app where a magical genie compares two things and picks the winner.",
-    images: ["/genie-shrug.svg"]
+      "Enter two things. Get an honest side-by-side comparison with a winner. Share the link anywhere."
   },
   robots: {
     index: true,
@@ -82,11 +73,11 @@ export default function RootLayout({
             __html: JSON.stringify({
               "@context": "https://schema.org",
               "@type": "WebApplication",
-              name: "Dis or Dat",
+              name: "disordat",
               description:
-                "A fun decision app where a magical genie compares two things and picks the winner",
+                "Compare any two things side by side and share the verdict with a link.",
               url: "https://disordat.com",
-              applicationCategory: "EntertainmentApplication",
+              applicationCategory: "UtilitiesApplication",
               operatingSystem: "Web Browser",
               offers: {
                 "@type": "Offer",
@@ -95,7 +86,7 @@ export default function RootLayout({
               },
               author: {
                 "@type": "Organization",
-                name: "Dis or Dat Team"
+                name: "disordat"
               }
             })
           }}

@@ -1,224 +1,33 @@
-"use client";
-import { useState, useEffect } from "react";
-import Genie from "@/components/Genie";
-import History from "@/components/History";
-import { saveToHistory, getHistory } from "@/lib/history";
-import { trackDecision, trackGenieInteraction } from "@/lib/analytics";
-import clsx from "clsx";
+import HomeClient, { type TrendingItem } from './HomeClient'
+import { getComparison, listRecentComparisonSlugs } from '@/lib/comparisons'
 
-type Verdict = "dis" | "dat" | "shrug";
+// Re-fetch trending data every 10 minutes so Google sees fresh internal links
+// without hammering KV on every request.
+export const revalidate = 600
 
-export default function Page() {
-  const [dis, setDis] = useState("");
-  const [dat, setDat] = useState("");
-  const [loading, setLoading] = useState(false);
-  const [verdict, setVerdict] = useState<Verdict | null>(null);
-  const [reason, setReason] = useState<string>("");
-  const [history, setHistory] = useState<
-    Array<{
-      dis: string;
-      dat: string;
-      verdict: "dis" | "dat" | "shrug";
-      reasoning: string;
-    }>
-  >([]);
-  const disabled = loading || (!dis && !dat);
-
-  // Load history on component mount
-  useEffect(() => {
-    const loadHistory = () => {
-      const historyData = getHistory();
-      const historyArray = historyData.values().map((item) => ({
-        dis: item.dis,
-        dat: item.dat,
-        verdict: item.verdict,
-        reasoning: item.reasoning
-      }));
-      setHistory(historyArray);
-    };
-
-    loadHistory();
-
-    // Listen for history updates
-    const handleHistoryUpdate = () => loadHistory();
-    window.addEventListener("history-updated", handleHistoryUpdate);
-
-    return () => {
-      window.removeEventListener("history-updated", handleHistoryUpdate);
-    };
-  }, []);
-
-  async function decide() {
-    if (!dis && !dat) return;
-    setLoading(true);
-    setVerdict(null);
-    setReason("");
-
-    // Track the decision attempt
-    trackGenieInteraction("decision_requested");
-
-    try {
-      const res = await fetch("/api/judge", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ dis, dat, history })
-      });
-      const data = await res.json();
-      setVerdict(data.verdict);
-      setReason(data.reasoning ?? "");
-
-      // Track the decision result
-      trackDecision(dis, dat, data.verdict);
-
-      // Save to history (only on client side)
-      if (typeof window !== "undefined") {
-        saveToHistory({
-          dis,
-          dat,
-          verdict: data.verdict,
-          reasoning: data.reasoning ?? ""
-        });
-      }
-    } catch {
-      setVerdict("dis");
-      setReason("Offline fallback.");
-
-      // Track offline fallback
-      trackGenieInteraction("offline_fallback");
-    } finally {
-      setLoading(false);
-    }
-  }
-
-  function swap() {
-    setVerdict(null);
-    setReason("");
-    setDis(dat);
-    setDat(dis);
-
-    // Track swap interaction
-    trackGenieInteraction("inputs_swapped");
-  }
-
-  function resetAll() {
-    setDis("");
-    setDat("");
-    setVerdict(null);
-    setReason("");
-
-    // Track reset interaction
-    trackGenieInteraction("inputs_reset");
-  }
-
-  return (
-    <main className="min-h-dvh bg-black text-white">
-      <div className="mx-auto max-w-3xl px-4 py-10">
-        <header className="text-center mb-6">
-          <h1 className="text-4xl font-bold">Dis or Dat</h1>
-          <p className="mt-3 text-lg font-medium text-indigo-600 dark:text-indigo-400">
-            Let the Magic Genie Decide What&apos;s Better! ✨
-          </p>
-          <p className="mt-2 text-sm opacity-80">
-            Enter any two things and watch the genie work its magic
-          </p>
-        </header>
-
-        <Genie verdict={verdict} />
-
-        <div className="grid gap-4 md:grid-cols-2">
-          <div
-            className={clsx(
-              "rounded-2xl border border-gray-700 p-4 transition-colors duration-200",
-              verdict === "dis" &&
-                "border-green-400 bg-green-900/30 shadow-lg shadow-green-500/20",
-              verdict === "dat" && "border-gray-700"
-            )}
-          >
-            <label className="block text-sm font-medium mb-2" htmlFor="dis">
-              Dis
-            </label>
-            <input
-              id="dis"
-              className="w-full rounded-xl border border-gray-700 px-3 py-2 outline-none focus:ring-2 focus:ring-indigo-500 bg-gray-900 text-white placeholder-gray-400"
-              placeholder="enter a name, object, food, etc."
-              value={dis}
-              onChange={(e) => setDis(e.target.value)}
-              onKeyDown={(e) => {
-                if (e.key === "Enter") decide();
-              }}
-            />
-          </div>
-          <div
-            className={clsx(
-              "rounded-2xl border border-gray-700 p-4 transition-colors duration-200",
-              verdict === "dat" &&
-                "border-green-400 bg-green-900/30 shadow-lg shadow-green-500/20",
-              verdict === "dis" && "border-gray-700"
-            )}
-          >
-            <label className="block text-sm font-medium mb-2" htmlFor="dat">
-              Dat
-            </label>
-            <input
-              id="dat"
-              className="w-full rounded-xl border border-gray-700 px-3 py-2 outline-none focus:ring-2 focus:ring-indigo-500 bg-gray-900 text-white placeholder-gray-400"
-              placeholder="enter a name, object, food, etc."
-              value={dat}
-              onChange={(e) => setDat(e.target.value)}
-              onKeyDown={(e) => {
-                if (e.key === "Enter") decide();
-              }}
-            />
-          </div>
-        </div>
-
-        <div className="mt-6 flex gap-3 justify-center">
-          <button
-            onClick={decide}
-            disabled={disabled}
-            className="rounded-xl bg-indigo-600 text-white px-5 py-2.5 disabled:opacity-50 hover:bg-indigo-700 transition-colors"
-          >
-            {loading ? "Thinking…" : "Decide"}
-          </button>
-          <button
-            onClick={swap}
-            className="rounded-xl border border-gray-700 px-5 py-2.5 hover:bg-gray-800 transition-colors text-white"
-          >
-            Swap
-          </button>
-          <button
-            onClick={resetAll}
-            className="rounded-xl border border-gray-700 px-5 py-2.5 hover:bg-gray-800 transition-colors text-white"
-          >
-            Reset
-          </button>
-        </div>
-
-        {verdict && (
-          <div className="mt-6 text-center">
-            <span
-              className={clsx(
-                "inline-flex items-center rounded-full px-3 py-1 text-sm font-semibold",
-                verdict === "dis"
-                  ? "bg-green-100 text-green-800 dark:bg-green-900/40 dark:text-green-200"
-                  : verdict === "dat"
-                  ? "bg-blue-100 text-blue-800 dark:bg-blue-900/40 dark:text-blue-200"
-                  : "bg-yellow-100 text-yellow-800 dark:bg-yellow-900/40 dark:text-yellow-200"
-              )}
-            >
-              {verdict.toUpperCase()}
-            </span>
-            {reason && <p className="mt-2 text-sm opacity-80">{reason}</p>}
-          </div>
-        )}
-
-        <History />
-
-        <footer className="mt-10 text-center text-xs opacity-70">
-          We almost never shrug. If your inputs are nonsense, the Genie might.
-        </footer>
-      </div>
-    </main>
-  );
+export default async function HomePage() {
+  const trending = await loadTrending()
+  return <HomeClient trending={trending} />
 }
 
+async function loadTrending(): Promise<TrendingItem[]> {
+  try {
+    const slugs = await listRecentComparisonSlugs(12)
+    const items: TrendingItem[] = []
+    for (const slug of slugs) {
+      const c = await getComparison(slug)
+      if (!c) continue
+      items.push({
+        slug: c.slug,
+        item_a: c.item_a,
+        item_b: c.item_b,
+        winner_label:
+          c.winner === 'tie' ? 'Too close' : c.winner === 'a' ? c.item_a : c.item_b,
+      })
+      if (items.length >= 10) break
+    }
+    return items
+  } catch {
+    return []
+  }
+}

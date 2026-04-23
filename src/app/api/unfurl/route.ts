@@ -84,7 +84,7 @@ export async function POST(req: NextRequest) {
         redirect: 'follow',
         headers: {
           // Many sites (Amazon, Best Buy) 503 without a realistic UA
-          'User-Agent': 'Mozilla/5.0 (compatible; disordat-unfurl/1.0; +https://disordat.com)',
+          'User-Agent': 'Mozilla/5.0 (compatible; disordat-unfurl/1.0; +https://disordat.org)',
           Accept: 'text/html,application/xhtml+xml,application/xml;q=0.9',
           'Accept-Language': 'en-US,en;q=0.9',
         },

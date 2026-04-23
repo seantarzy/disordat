@@ -1,7 +1,7 @@
 import type { MetadataRoute } from 'next'
 import { listRecentComparisonSlugs, getComparison } from '@/lib/comparisons'
 
-const SITE_URL = 'https://disordat.com'
+const SITE_URL = 'https://disordat.org'
 
 export const revalidate = 3600 // rebuild at most hourly
 

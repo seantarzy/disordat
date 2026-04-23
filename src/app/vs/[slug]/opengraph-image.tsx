@@ -166,7 +166,7 @@ export default async function OGImage({ params }: { params: RouteParams }) {
           }}
         >
           <div style={{ display: 'flex' }}>Compare anything. Share the verdict.</div>
-          <div style={{ display: 'flex', fontWeight: 600, color: '#0f172a' }}>disordat.com</div>
+          <div style={{ display: 'flex', fontWeight: 600, color: '#0f172a' }}>disordat.org</div>
         </div>
       </div>
     ),

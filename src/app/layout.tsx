@@ -20,7 +20,7 @@ export const metadata: Metadata = {
     address: false,
     telephone: false
   },
-  metadataBase: new URL("https://disordat.com"),
+  metadataBase: new URL("https://disordat.org"),
   alternates: {
     canonical: "/"
   },
@@ -28,7 +28,7 @@ export const metadata: Metadata = {
     title: "disordat — compare anything, share the verdict",
     description:
       "Enter two things. Get an honest side-by-side comparison with a winner. Share the link anywhere.",
-    url: "https://disordat.com",
+    url: "https://disordat.org",
     siteName: "disordat",
     locale: "en_US",
     type: "website"
@@ -76,7 +76,7 @@ export default function RootLayout({
               name: "disordat",
               description:
                 "Compare any two things side by side and share the verdict with a link.",
-              url: "https://disordat.com",
+              url: "https://disordat.org",
               applicationCategory: "UtilitiesApplication",
               operatingSystem: "Web Browser",
               offers: {

@@ -12,7 +12,7 @@ const DEFAULT_BATCH = 5
  * so we seed a few pairs per call and the caller iterates.
  *
  * Trigger one batch:
- *   curl -X POST "https://disordat.com/api/admin/seed-comparisons?offset=0&limit=5" \
+ *   curl -X POST "https://disordat.org/api/admin/seed-comparisons?offset=0&limit=5" \
  *        -H "X-Admin-Secret: $ADMIN_SECRET"
  *
  * The response includes `nextOffset`. Keep calling with that offset until

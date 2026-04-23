@@ -9,7 +9,7 @@ import {
 } from '@/lib/comparisons'
 import ShareButtons from '@/components/ShareButtons'
 
-const SITE_URL = 'https://disordat.com'
+const SITE_URL = 'https://disordat.org'
 
 type RouteParams = { slug: string }
 

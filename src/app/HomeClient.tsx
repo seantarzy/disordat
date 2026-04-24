@@ -348,7 +348,11 @@ export default function HomeClient({ trending = [] }: { trending?: TrendingItem[
           <h2 className="text-center text-xs font-semibold uppercase tracking-widest text-slate-500 mb-5">
             Why not just ask ChatGPT?
           </h2>
-          <div className="grid gap-5 md:grid-cols-3 text-sm">
+          <div className="grid gap-5 md:grid-cols-2 lg:grid-cols-4 text-sm">
+            <ValueProp
+              title="An honest verdict"
+              body="Chatbots know you&rsquo;re asking and tune the answer to please you. disordat doesn&rsquo;t know who&rsquo;s asking — it just judges the matchup on its merits."
+            />
             <ValueProp
               title="The link is the point"
               body="Every comparison lives at its own URL with a rich preview. Drop it in a group chat or a DM — it shows up as a card, not a wall of text."
